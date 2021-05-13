@@ -1,0 +1,23 @@
+<h1>Show Face</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @face.name %>
+  </li>
+
+  <li>
+    <strong>Author:</strong>
+    <%= @face.author %>
+  </li>
+
+  <li>
+    <strong>Keywords:</strong>
+    <%= @face.keywords %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.face_path(@conn, :edit, @face) %></span>
+<span><%= link "Back", to: Routes.face_path(@conn, :index) %></span>

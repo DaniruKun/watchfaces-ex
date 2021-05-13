@@ -1,0 +1,5 @@
+<h1>Edit Face</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.face_path(@conn, :update, @face)) %>
+
+<span><%= link "Back", to: Routes.face_path(@conn, :index) %></span>

@@ -1,0 +1,30 @@
+<h1>Listing Faces</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Author</th>
+      <th>Keywords</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for face <- @faces do %>
+    <tr>
+      <td><%= face.name %></td>
+      <td><%= face.author %></td>
+      <td><%= face.keywords %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.face_path(@conn, :show, face) %></span>
+        <span><%= link "Edit", to: Routes.face_path(@conn, :edit, face) %></span>
+        <span><%= link "Delete", to: Routes.face_path(@conn, :delete, face), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Face", to: Routes.face_path(@conn, :new) %></span>
