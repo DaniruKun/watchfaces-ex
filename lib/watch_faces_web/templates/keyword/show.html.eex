@@ -1,0 +1,13 @@
+<h1>Show Keyword</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @keyword.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.keyword_path(@conn, :edit, @keyword) %></span>
+<span><%= link "Back", to: Routes.keyword_path(@conn, :index) %></span>

@@ -6,6 +6,8 @@ defmodule WatchFaces.Faces.Face do
     field :author, :integer
     field :keywords, {:array, :string}
     field :name, :string
+    field :pkg_file, :string
+    field :thumbnail, :string
 
     timestamps()
   end

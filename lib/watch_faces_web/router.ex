@@ -19,6 +19,8 @@ defmodule WatchFacesWeb.Router do
     get "/", PageController, :index
     resources "/users", UserController
     resources "/faces", FaceController
+    resources "/keywords", KeywordController
+    resources "/comments", CommentController
   end
 
   # Other scopes may use custom stacks.

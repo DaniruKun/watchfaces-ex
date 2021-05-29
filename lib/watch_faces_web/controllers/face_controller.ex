@@ -4,6 +4,8 @@ defmodule WatchFacesWeb.FaceController do
   alias WatchFaces.Faces
   alias WatchFaces.Faces.Face
 
+  require Logger
+
   def index(conn, _params) do
     faces = Faces.list_faces()
     render(conn, "index.html", faces: faces)
@@ -15,7 +17,19 @@ defmodule WatchFacesWeb.FaceController do
   end
 
   def create(conn, %{"face" => face_params}) do
-    case Faces.create_face(face_params) do
+    pkg_file =
+      if upload = face_params["watchface_file"] do
+        Logger.info("Saving new watch face with id: #{face.id}")
+
+        upload_file_name = pkg_file_name(face_params)
+
+        Logger.debug("Upload file name: #{upload_file_name}")
+
+        :ok = File.cp(upload.path, "/var/www/faces/media/#{upload_file_name}")
+        upload_file_name
+      end
+
+    case Faces.create_face(Map.merge(face_params, %{"pkg_file" => "/uploads/#{pkg_file}"})) do
       {:ok, face} ->
         conn
         |> put_flash(:info, "Face created successfully.")
@@ -31,6 +45,7 @@ defmodule WatchFacesWeb.FaceController do
     render(conn, "show.html", face: face)
   end
 
+  @spec edit(Plug.Conn.t(), map) :: Plug.Conn.t()
   def edit(conn, %{"id" => id}) do
     face = Faces.get_face!(id)
     changeset = Faces.change_face(face)
@@ -58,5 +73,11 @@ defmodule WatchFacesWeb.FaceController do
     conn
     |> put_flash(:info, "Face deleted successfully.")
     |> redirect(to: Routes.face_path(conn, :index))
+  end
+
+  defp pkg_file_name(%{"author" => author, "name" => name, "watchface_file" => upload}) do
+    #hash = :crypto.hash(:sha256, author <> name) |> Base.encode64()
+    extension = Path.extname(upload.filename)
+    "#{author}-#{name}-pkg#{extension}" |> URI.encode()
   end
 end

@@ -6,6 +6,8 @@ defmodule WatchFaces.Repo.Migrations.CreateFaces do
       add :name, :string
       add :author, :integer
       add :keywords, {:array, :string}
+      add :pkg_file, :string
+      add :thumbnail, :string
 
       timestamps()
     end
