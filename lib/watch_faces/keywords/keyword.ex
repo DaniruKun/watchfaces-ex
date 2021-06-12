@@ -4,6 +4,7 @@ defmodule WatchFaces.Keywords.Keyword do
 
   schema "keywords" do
     field :name, :string
+    many_to_many :face, WatchFaces.Faces.Face, join_through: "faces_keywords"
 
     timestamps()
   end

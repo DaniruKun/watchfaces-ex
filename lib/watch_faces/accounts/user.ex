@@ -7,6 +7,7 @@ defmodule WatchFaces.Accounts.User do
     field :role, :string
     field :username, :string
     field :email, :string
+    has_many :faces, WatchFaces.Faces.Face
 
     timestamps()
   end

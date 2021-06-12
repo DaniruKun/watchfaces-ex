@@ -3,11 +3,12 @@ defmodule WatchFaces.Faces.Face do
   import Ecto.Changeset
 
   schema "faces" do
-    field :author, :integer
-    field :keywords, {:array, :string}
-    field :name, :string
-    field :pkg_file, :string
+    field :name, :string, null: false
+    field :pkg_file, :string, null: false
     field :thumbnail, :string
+    field :keywords, {:array, :string}
+    belongs_to :user, WatchFaces.Accounts.User
+    #many_to_many :keywords, WatchFaces.Keywords.Keyword, join_through: "faces_keywords"
 
     timestamps()
   end
@@ -15,7 +16,7 @@ defmodule WatchFaces.Faces.Face do
   @doc false
   def changeset(face, attrs) do
     face
-    |> cast(attrs, [:name, :author, :keywords])
-    |> validate_required([:name, :author, :keywords])
+    |> cast(attrs, [:name, :pkg_file, :thumbnail])
+    |> validate_required([:name, :pkg_file])
   end
 end

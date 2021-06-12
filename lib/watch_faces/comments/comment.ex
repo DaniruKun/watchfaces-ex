@@ -3,9 +3,9 @@ defmodule WatchFaces.Comments.Comment do
   import Ecto.Changeset
 
   schema "comments" do
-    field :author, :integer
+    belongs_to :author, WatchFaces.Accounts.User
     field :content, :string
-    field :face, :integer
+    belongs_to :face, WatchFaces.Faces.Face
 
     timestamps()
   end

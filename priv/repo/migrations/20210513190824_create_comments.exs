@@ -3,9 +3,9 @@ defmodule WatchFaces.Repo.Migrations.CreateComments do
 
   def change do
     create table(:comments) do
-      add :content, :text
-      add :author, :integer
-      add :face, :integer
+      add :content, :text, null: false
+      add :author, references(:users)
+      add :face, references(:faces)
 
       timestamps()
     end
