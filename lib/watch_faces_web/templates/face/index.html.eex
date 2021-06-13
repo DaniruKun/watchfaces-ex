@@ -14,7 +14,7 @@
 <%= for face <- @faces do %>
     <tr>
       <td><%= face.name %></td>
-      <td><%= face.author %></td>
+      <td><%= face.user_id %></td>
       <td><%= face.keywords %></td>
 
       <td>
