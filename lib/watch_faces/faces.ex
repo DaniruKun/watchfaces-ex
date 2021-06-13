@@ -50,8 +50,7 @@ defmodule WatchFaces.Faces do
 
   """
   def create_face(attrs \\ %{}) do
-    %Face{}
-    |> Face.changeset(attrs)
+    Face.insert_changeset(attrs)
     |> Repo.insert()
   end
 

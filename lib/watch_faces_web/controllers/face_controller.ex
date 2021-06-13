@@ -6,6 +6,18 @@ defmodule WatchFacesWeb.FaceController do
 
   require Logger
 
+  #   Face params:
+  # : %{
+  #   "keywords" => ["option1"],
+  #   "name" => "Lain",
+  #   "user" => "1",
+  #   "watchface_file" => %Plug.Upload{
+  #     content_type: "application/octet-stream",
+  #     filename: "Photos.watchface",
+  #     path: "/var/folders/fl/lfgytbr51_z3rmt1t6swrzv40000gn/T//plug-1623/multipart-1623588662-773925258329140-2"
+  #   }
+  # }
+
   def index(conn, _params) do
     faces = Faces.list_faces()
     render(conn, "index.html", faces: faces)
@@ -17,20 +29,26 @@ defmodule WatchFacesWeb.FaceController do
   end
 
   def create(conn, %{"face" => face_params}) do
-    pkg_file =
-      if face_params["watchface_file"] do
-        save_thumbnail(face_params)
-        save_watchface(face_params)
+    IO.inspect(face_params, label: "Face params: \n")
+
+    if face_params["watchface_file"] do
+      with thumbnail_file_name <- save_thumbnail(face_params),
+           pkg_file_name <- save_watchface(face_params) do
+
+        file_params = %{
+          "pkg_file" => "/uploads/#{pkg_file_name}",
+          "thumbnail" => "/uploads/#{thumbnail_file_name}"
+        }
+        case Faces.create_face(Map.merge(face_params, file_params)) do
+          {:ok, face} ->
+            conn
+            |> put_flash(:info, "Face created successfully.")
+            |> redirect(to: Routes.face_path(conn, :show, face))
+
+          {:error, %Ecto.Changeset{} = changeset} ->
+            render(conn, "new.html", changeset: changeset)
+        end
       end
-
-    case Faces.create_face(Map.merge(face_params, %{"pkg_file" => "/uploads/#{pkg_file}"})) do
-      {:ok, face} ->
-        conn
-        |> put_flash(:info, "Face created successfully.")
-        |> redirect(to: Routes.face_path(conn, :show, face))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
     end
   end
 
@@ -104,6 +122,8 @@ defmodule WatchFacesWeb.FaceController do
         Path.join("/var/www/faces/media/", thumb_file_name),
         fn _, _ -> true end
       )
+
     :ok = File.rm(Path.join(workdir, "snapshot.png"))
+    thumb_file_name
   end
 end
