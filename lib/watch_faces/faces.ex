@@ -35,7 +35,7 @@ defmodule WatchFaces.Faces do
       ** (Ecto.NoResultsError)
 
   """
-  def get_face!(id), do: Repo.get!(Face, id)
+  def get_face!(id), do: Repo.get!(Face, id) |> Repo.preload(:user)
 
   @doc """
   Creates a face.

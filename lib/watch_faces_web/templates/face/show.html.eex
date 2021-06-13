@@ -9,7 +9,7 @@
 
   <li>
     <strong>Author:</strong>
-    <%= @face.user_id %>
+    <%= @face.user.username %>
   </li>
 
   <li>

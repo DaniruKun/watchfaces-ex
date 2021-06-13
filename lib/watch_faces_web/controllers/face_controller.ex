@@ -18,6 +18,8 @@ defmodule WatchFacesWeb.FaceController do
   #   }
   # }
 
+  @media_folder_path "/var/www/faces/media/"
+
   def index(conn, _params) do
     faces = Faces.list_faces()
     render(conn, "index.html", faces: faces)
@@ -31,9 +33,10 @@ defmodule WatchFacesWeb.FaceController do
   def create(conn, %{"face" => face_params}) do
     IO.inspect(face_params, label: "Face params: \n")
 
+
     if face_params["watchface_file"] do
-      with thumbnail_file_name <- save_thumbnail(face_params),
-           pkg_file_name <- save_watchface(face_params) do
+      with {:ok, thumbnail_file_name} <- save_thumbnail(face_params),
+           {:ok, pkg_file_name} <- save_watchface(face_params) do
 
         file_params = %{
           "pkg_file" => "/uploads/#{pkg_file_name}",
@@ -87,7 +90,7 @@ defmodule WatchFacesWeb.FaceController do
     |> redirect(to: Routes.face_path(conn, :index))
   end
 
-  defp pkg_file_name(%{"user" => author, "name" => name, "watchface_file" => upload}) do
+  defp pkg_file_name(%{"user_id" => author, "name" => name, "watchface_file" => upload}) do
     extension = Path.extname(upload.filename)
     "#{author}-#{name}-pkg#{extension}" |> URI.encode()
   end
@@ -97,8 +100,8 @@ defmodule WatchFacesWeb.FaceController do
 
     Logger.debug("Upload file name: #{upload_file_name}")
 
-    :ok = File.cp(upload.path, "/var/www/faces/media/#{upload_file_name}")
-    upload_file_name
+    :ok = File.cp(upload.path, @media_folder_path <> upload_file_name)
+    {:ok, upload_file_name}
   end
 
   defp save_thumbnail(%{"watchface_file" => upload} = face_params) do
@@ -109,21 +112,21 @@ defmodule WatchFacesWeb.FaceController do
       {:file_list, ['snapshot.png']}
     ]
 
-    %{"user" => author, "name" => face_name} = face_params
+    %{"user_id" => author, "name" => face_name} = face_params
 
     # Extract thumbnail img in the temp dir
     {:ok, _filelist} = :zip.unzip(to_charlist(upload.path), zip_opts)
-    thumb_file_name = "#{author}-#{face_name}-thumb.png" |> URI.encode()
+    thumb_file_name = "#{author}-#{face_name}-thumb.png" |> String.replace(" ", "") |> URI.encode()
 
     # Copy and rename the extracted thumbnail to uploads folder, then delete old one
     :ok =
       File.cp(
         Path.join([workdir, "snapshot.png"]),
-        Path.join("/var/www/faces/media/", thumb_file_name),
+        Path.join(@media_folder_path, thumb_file_name),
         fn _, _ -> true end
       )
 
     :ok = File.rm(Path.join(workdir, "snapshot.png"))
-    thumb_file_name
+    {:ok, thumb_file_name}
   end
 end

@@ -21,7 +21,7 @@ defmodule WatchFaces.Faces.Face do
     |> validate_required([:name, :pkg_file])
   end
 
-  def insert_changeset(%{"user" => user_id} = attrs) do
+  def insert_changeset(%{"user_id" => user_id} = attrs) do
     user = WatchFaces.Accounts.get_user!(user_id)
 
     Ecto.build_assoc(user, :faces, attrs)
