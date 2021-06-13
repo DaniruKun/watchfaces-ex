@@ -34,15 +34,14 @@ defmodule WatchFacesWeb.FaceController do
   def create(conn, %{"face" => face_params}) do
     IO.inspect(face_params, label: "Face params: \n")
 
-
     if face_params["watchface_file"] do
       with {:ok, thumbnail_file_name} <- save_thumbnail(face_params),
            {:ok, pkg_file_name} <- save_watchface(face_params) do
-
         file_params = %{
           "pkg_file" => "/uploads/#{pkg_file_name}",
           "thumbnail" => "/uploads/#{thumbnail_file_name}"
         }
+
         case Faces.create_face(Map.merge(face_params, file_params)) do
           {:ok, face} ->
             conn
@@ -94,7 +93,7 @@ defmodule WatchFacesWeb.FaceController do
 
   defp pkg_file_name(%{"user_id" => author, "name" => name, "watchface_file" => upload}) do
     extension = Path.extname(upload.filename)
-    "#{author}-#{name}-pkg#{extension}" |> URI.encode()
+    "#{author}-#{name}-pkg#{extension}" |> String.replace(" ", "") |> URI.encode()
   end
 
   defp save_watchface(%{"watchface_file" => upload} = face_params) do
@@ -106,7 +105,7 @@ defmodule WatchFacesWeb.FaceController do
     {:ok, upload_file_name}
   end
 
-  defp save_thumbnail(%{"watchface_file" => upload} = face_params) do
+  defp save_thumbnail(%{"watchface_file" => upload, "user_id" => author, "name" => face_name}) do
     workdir = Path.dirname(upload.path)
 
     zip_opts = [
@@ -114,11 +113,11 @@ defmodule WatchFacesWeb.FaceController do
       {:file_list, ['snapshot.png']}
     ]
 
-    %{"user_id" => author, "name" => face_name} = face_params
-
     # Extract thumbnail img in the temp dir
     {:ok, _filelist} = :zip.unzip(to_charlist(upload.path), zip_opts)
-    thumb_file_name = "#{author}-#{face_name}-thumb.png" |> String.replace(" ", "") |> URI.encode()
+
+    thumb_file_name =
+      "#{author}-#{face_name}-thumb.png" |> String.replace(" ", "") |> URI.encode()
 
     # Copy and rename the extracted thumbnail to uploads folder, then delete old one
     :ok =
@@ -132,7 +131,9 @@ defmodule WatchFacesWeb.FaceController do
     {:ok, thumb_file_name}
   end
 
+  defp save_thumbnail(_face_params), do: {:error, "missing required params"}
+
   defp fetch_keywords() do
-    WatchFaces.Keywords.list_keywords() |> Enum.map(&({&1.name, &1.id}))
+    WatchFaces.Keywords.list_keywords() |> Enum.map(&{&1.name, &1.id})
   end
 end

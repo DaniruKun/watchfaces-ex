@@ -1,4 +1,9 @@
 defmodule WatchFaces.Faces.Face do
+  @moduledoc """
+  Face schema and changeset definitions module.
+
+  A face typically consists of a name, keywords, an author, a watchface file path and a thumbnail image.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -27,18 +32,7 @@ defmodule WatchFaces.Faces.Face do
     Ecto.build_assoc(user, :faces, attrs)
     |> cast(attrs, [:name, :pkg_file, :thumbnail, :keywords, :user_id])
     |> foreign_key_constraint(:user_id)
+    |> validate_length(:name, min: 3)
     |> unique_constraint(:name)
   end
 end
-
-# Face params:
-# : %{
-#   "keywords" => ["option1"],
-#   "name" => "Lain",
-#   "user" => "1",
-#   "watchface_file" => %Plug.Upload{
-#     content_type: "application/octet-stream",
-#     filename: "Photos.watchface",
-#     path: "/var/folders/fl/lfgytbr51_z3rmt1t6swrzv40000gn/T//plug-1623/multipart-1623588662-773925258329140-2"
-#   }
-# }
