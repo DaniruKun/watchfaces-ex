@@ -17,7 +17,7 @@
   <%= file_input f, :watchface_file, class: "form-control" %>
 
   <%= label f, :keywords %>
-  <%= multiple_select f, :keywords, ["Option 1": "option1", "Option 2": "option2"] %>
+  <%= multiple_select f, :keywords, @keywords, selected: [] %>
   <%= error_tag f, :keywords %>
 
   <div>

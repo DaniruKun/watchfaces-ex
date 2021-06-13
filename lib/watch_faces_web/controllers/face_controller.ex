@@ -10,7 +10,7 @@ defmodule WatchFacesWeb.FaceController do
   # : %{
   #   "keywords" => ["option1"],
   #   "name" => "Lain",
-  #   "user" => "1",
+  #   "user_id" => "1",
   #   "watchface_file" => %Plug.Upload{
   #     content_type: "application/octet-stream",
   #     filename: "Photos.watchface",
@@ -27,7 +27,8 @@ defmodule WatchFacesWeb.FaceController do
 
   def new(conn, _params) do
     changeset = Faces.change_face(%Face{})
-    render(conn, "new.html", changeset: changeset)
+    keywords = fetch_keywords()
+    render(conn, "new.html", changeset: changeset, keywords: keywords)
   end
 
   def create(conn, %{"face" => face_params}) do
@@ -64,7 +65,8 @@ defmodule WatchFacesWeb.FaceController do
   def edit(conn, %{"id" => id}) do
     face = Faces.get_face!(id)
     changeset = Faces.change_face(face)
-    render(conn, "edit.html", face: face, changeset: changeset)
+    keywords = fetch_keywords()
+    render(conn, "edit.html", face: face, changeset: changeset, keywords: keywords)
   end
 
   def update(conn, %{"id" => id, "face" => face_params}) do
@@ -128,5 +130,9 @@ defmodule WatchFacesWeb.FaceController do
 
     :ok = File.rm(Path.join(workdir, "snapshot.png"))
     {:ok, thumb_file_name}
+  end
+
+  defp fetch_keywords() do
+    WatchFaces.Keywords.list_keywords() |> Enum.map(&({&1.name, &1.id}))
   end
 end
