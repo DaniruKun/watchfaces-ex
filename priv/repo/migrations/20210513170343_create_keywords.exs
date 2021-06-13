@@ -7,6 +7,5 @@ defmodule WatchFaces.Repo.Migrations.CreateKeywords do
 
       timestamps()
     end
-
   end
 end

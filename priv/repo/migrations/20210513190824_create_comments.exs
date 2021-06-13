@@ -9,6 +9,5 @@ defmodule WatchFaces.Repo.Migrations.CreateComments do
 
       timestamps()
     end
-
   end
 end

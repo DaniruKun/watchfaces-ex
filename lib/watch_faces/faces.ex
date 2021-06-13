@@ -35,7 +35,7 @@ defmodule WatchFaces.Faces do
       ** (Ecto.NoResultsError)
 
   """
-  def get_face!(id), do: Repo.get!(Face, id) |> Repo.preload(:user)
+  def get_face!(id), do: Repo.get!(Face, id) |> Repo.preload([:user, :keywords])
 
   @doc """
   Creates a face.
@@ -85,7 +85,8 @@ defmodule WatchFaces.Faces do
 
   """
   def delete_face(%Face{} = face) do
-    Repo.delete(face)
+    face
+    |> Repo.delete()
   end
 
   @doc """

@@ -14,7 +14,10 @@
 
   <li>
     <strong>Keywords:</strong>
-    <%= @face.keywords %>
+    <%= for keyword <- @face.keywords do %>
+      <%= keyword.name %>
+    <% end %>
+
   </li>
 
 </ul>

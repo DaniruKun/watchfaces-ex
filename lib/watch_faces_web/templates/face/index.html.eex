@@ -15,7 +15,7 @@
     <tr>
       <td><%= face.name %></td>
       <td><%= face.user_id %></td>
-      <td><%= face.keywords %></td>
+      <%# <td><%= face.keywords %></td> %>
 
       <td>
         <span><%= link "Show", to: Routes.face_path(@conn, :show, face) %></span>

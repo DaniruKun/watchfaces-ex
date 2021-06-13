@@ -57,7 +57,7 @@ defmodule WatchFacesWeb.FaceController do
 
   def show(conn, %{"id" => id}) do
     face = Faces.get_face!(id)
-    render(conn, "show.html", face: face)
+    render(conn, "show.html", face: face, keywords: [])
   end
 
   @spec edit(Plug.Conn.t(), map) :: Plug.Conn.t()
@@ -134,6 +134,6 @@ defmodule WatchFacesWeb.FaceController do
   defp save_thumbnail(_face_params), do: {:error, "missing required params"}
 
   defp fetch_keywords() do
-    WatchFaces.Keywords.list_keywords() |> Enum.map(&{&1.name, &1.id})
+    WatchFaces.Keywords.list_keywords() |> Enum.map(&{&1.name, &1.name})
   end
 end

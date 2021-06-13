@@ -7,6 +7,6 @@ defmodule WatchFaces.Repo.Migrations.CreateFacesKeywords do
       add :keyword_id, references(:keywords)
     end
 
-    create unique_index(:faces_keywords, [:face_id, :keyword_id])
+    create index(:faces_keywords, [:face_id, :keyword_id])
   end
 end
