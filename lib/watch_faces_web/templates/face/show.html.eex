@@ -19,7 +19,8 @@
 
 </ul>
 
-<%= img_tag(Routes.static_path(@conn, "/uploads/123-Lain-thumb.png"), class: "w-50") %>
+<%= img_tag(@face.thumbnail) %>
+<%= link "Download", to: @face.pkg_file %>
 
 <span><%= link "Edit", to: Routes.face_path(@conn, :edit, @face) %></span>
 <span><%= link "Back", to: Routes.face_path(@conn, :index) %></span>
