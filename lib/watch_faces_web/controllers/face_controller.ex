@@ -69,7 +69,7 @@ defmodule WatchFacesWeb.FaceController do
     |> redirect(to: Routes.face_path(conn, :index))
   end
 
-  defp pkg_file_name(%{"author" => author, "name" => name, "watchface_file" => upload}) do
+  defp pkg_file_name(%{"user" => author, "name" => name, "watchface_file" => upload}) do
     extension = Path.extname(upload.filename)
     "#{author}-#{name}-pkg#{extension}" |> URI.encode()
   end
@@ -84,24 +84,26 @@ defmodule WatchFacesWeb.FaceController do
   end
 
   defp save_thumbnail(%{"watchface_file" => upload} = face_params) do
-    working_dir = upload.path
+    workdir = Path.dirname(upload.path)
 
     zip_opts = [
-      {:cwd, to_charlist(working_dir)},
+      {:cwd, to_charlist(workdir)},
       {:file_list, ['snapshot.png']}
     ]
 
+    %{"user" => author, "name" => face_name} = face_params
+
     # Extract thumbnail img in the temp dir
-    {:ok, _filelist} = :zip.unzip(to_charlist(upload.filename), zip_opts)
-    thumb_file_name = "#{face_params.author}-#{face_params.name}-thumb.png" |> URI.encode()
+    {:ok, _filelist} = :zip.unzip(to_charlist(upload.path), zip_opts)
+    thumb_file_name = "#{author}-#{face_name}-thumb.png" |> URI.encode()
 
     # Copy and rename the extracted thumbnail to uploads folder, then delete old one
     :ok =
       File.cp(
-        Path.join([working_dir, "snapshot.png"]),
+        Path.join([workdir, "snapshot.png"]),
         Path.join("/var/www/faces/media/", thumb_file_name),
         fn _, _ -> true end
       )
-    :ok = File.rm(Path.join(working_dir, "snapshot.png"))
+    :ok = File.rm(Path.join(workdir, "snapshot.png"))
   end
 end
