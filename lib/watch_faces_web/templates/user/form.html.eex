@@ -1,23 +1,34 @@
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+          <div>
+            <%= form_for @changeset, @action, fn f -> %>
+              <%= if @changeset.action do %>
+              <div class="alert alert-danger">
+                <p>Oops, something went wrong! Please check the errors below.</p>
+              </div>
+              <% end %>
+
+              <%= label f, :username, class: "form-label" %>
+              <%= text_input f, :username, class: "form-control" %>
+              <%= error_tag f, :username %>
+
+              <%= label f, :email, class: "form-label" %>
+              <%= text_input f, :email, class: "form-control" %>
+              <%= error_tag f, :email %>
+
+              <%= label f, :password, class: "form-label" %>
+              <%= text_input f, :password, class: "form-control" %>
+              <div id="passwordHelpBlock" class="form-text">
+              Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+              </div>
+              <%= error_tag f, :password %>
+
+              <div class="my-2">
+              <%= submit "Register", class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
     </div>
-  <% end %>
-
-  <%= label f, :username %>
-  <%= text_input f, :username %>
-  <%= error_tag f, :username %>
-
-  <%= label f, :email %>
-  <%= text_input f, :email %>
-  <%= error_tag f, :email %>
-
-  <%= label f, :password %>
-  <%= text_input f, :password %>
-  <%= error_tag f, :password %>
-
-  <div>
-    <%= submit "Save" %>
-  </div>
-<% end %>
+</div>

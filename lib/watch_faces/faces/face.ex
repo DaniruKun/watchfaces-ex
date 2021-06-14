@@ -33,11 +33,11 @@ defmodule WatchFaces.Faces.Face do
     user = WatchFaces.Accounts.get_user!(user_id)
     keywords = WatchFaces.Keywords.list_keywords() |> Enum.filter(&(&1.name in attrs["keywords"]))
 
-    Ecto.build_assoc(user, :faces, attrs)
+    user
+    |> Ecto.build_assoc(:faces, attrs)
     |> cast(attrs, [:name, :pkg_file, :thumbnail, :user_id])
     |> put_assoc(:keywords, keywords)
     |> put_assoc(:user, user)
-    |> foreign_key_constraint(:user_id)
     |> validate_length(:name, min: 3)
     |> unique_constraint(:name)
   end

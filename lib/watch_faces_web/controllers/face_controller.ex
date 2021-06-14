@@ -32,8 +32,6 @@ defmodule WatchFacesWeb.FaceController do
   end
 
   def create(conn, %{"face" => face_params}) do
-    IO.inspect(face_params, label: "Face params: \n")
-
     if face_params["watchface_file"] do
       with {:ok, thumbnail_file_name} <- save_thumbnail(face_params),
            {:ok, pkg_file_name} <- save_watchface(face_params) do

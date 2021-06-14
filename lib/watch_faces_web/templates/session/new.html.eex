@@ -1,14 +1,21 @@
-<h1>Login</h1>
-
-<%= form_for @conn,
-             Routes.session_path(@conn, :create),
-             [as: :session],
-             fn f -> %>
-  <div>
-    <%= text_input f, :username, placeholder: "Username" %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <h1>Login</h1>
+      <%= form_for @conn,
+                  Routes.session_path(@conn, :create),
+                  [as: :session],
+                  fn f -> %>
+        <div class="my-2">
+          <%= label f, :username, class: "form-label" %>
+          <%= text_input f, :username, placeholder: "Username", class: "form-control" %>
+        </div>
+        <div class="my-2">
+          <%= label f, :password, class: "form-label" %>
+          <%= password_input f, :password, placeholder: "Password", class: "form-control" %>
+        </div>
+        <%= submit "Log in", class: "btn btn-primary mt-1" %>
+      <% end %>
+    </div>
   </div>
-  <div>
-    <%= password_input f, :password, placeholder: "Password" %>
-  </div>
-  <%= submit "Log in" %>
-<% end %>
+</div>
