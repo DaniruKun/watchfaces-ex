@@ -22,6 +22,7 @@ defmodule WatchFacesWeb.Router do
     resources "/faces", FaceController
     resources "/keywords", KeywordController
     resources "/comments", CommentController
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
   # Other scopes may use custom stacks.
