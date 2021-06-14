@@ -9,13 +9,13 @@
   <%= text_input f, :username %>
   <%= error_tag f, :username %>
 
-  <%= label f, :role %>
-  <%= text_input f, :role %>
-  <%= error_tag f, :role %>
+  <%= label f, :email %>
+  <%= text_input f, :email %>
+  <%= error_tag f, :email %>
 
-  <%= label f, :password_hash %>
-  <%= text_input f, :password_hash %>
-  <%= error_tag f, :password_hash %>
+  <%= label f, :password %>
+  <%= text_input f, :password %>
+  <%= error_tag f, :password %>
 
   <div>
     <%= submit "Save" %>

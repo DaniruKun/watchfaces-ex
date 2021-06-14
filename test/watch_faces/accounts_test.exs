@@ -6,8 +6,16 @@ defmodule WatchFaces.AccountsTest do
   describe "users" do
     alias WatchFaces.Accounts.User
 
-    @valid_attrs %{password_hash: "some password_hash", role: "some role", username: "some username"}
-    @update_attrs %{password_hash: "some updated password_hash", role: "some updated role", username: "some updated username"}
+    @valid_attrs %{
+      password_hash: "some password_hash",
+      role: "some role",
+      username: "some username"
+    }
+    @update_attrs %{
+      password_hash: "some updated password_hash",
+      role: "some updated role",
+      username: "some updated username"
+    }
     @invalid_attrs %{password_hash: nil, role: nil, username: nil}
 
     def user_fixture(attrs \\ %{}) do

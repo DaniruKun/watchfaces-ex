@@ -3,8 +3,16 @@ defmodule WatchFacesWeb.UserControllerTest do
 
   alias WatchFaces.Accounts
 
-  @create_attrs %{password_hash: "some password_hash", role: "some role", username: "some username"}
-  @update_attrs %{password_hash: "some updated password_hash", role: "some updated role", username: "some updated username"}
+  @create_attrs %{
+    password_hash: "some password_hash",
+    role: "some role",
+    username: "some username"
+  }
+  @update_attrs %{
+    password_hash: "some updated password_hash",
+    role: "some updated role",
+    username: "some updated username"
+  }
   @invalid_attrs %{password_hash: nil, role: nil, username: nil}
 
   def fixture(:user) do
@@ -75,6 +83,7 @@ defmodule WatchFacesWeb.UserControllerTest do
     test "deletes chosen user", %{conn: conn, user: user} do
       conn = delete(conn, Routes.user_path(conn, :delete, user))
       assert redirected_to(conn) == Routes.user_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.user_path(conn, :show, user))
       end
