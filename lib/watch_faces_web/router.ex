@@ -23,6 +23,9 @@ defmodule WatchFacesWeb.Router do
     resources "/keywords", KeywordController
     resources "/comments", CommentController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+
+    # Google Oauth
+    get "/auth/google/callback", GoogleAuthController, :index
   end
 
   # Other scopes may use custom stacks.

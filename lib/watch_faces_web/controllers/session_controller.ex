@@ -2,7 +2,8 @@ defmodule WatchFacesWeb.SessionController do
   use WatchFacesWeb, :controller
 
   def new(conn, _) do
-    render(conn, "new.html")
+    oauth_google_url = ElixirAuthGoogle.generate_oauth_url(conn)
+    render(conn, "new.html", oauth_google_url: oauth_google_url)
   end
 
   def create(conn, %{"session" => %{"username" => username, "password" => pass}}) do

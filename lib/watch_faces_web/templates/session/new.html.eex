@@ -1,6 +1,6 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-6">
+<div class="container mt-3">
+  <div class="row px-lg-5 mt-5">
+    <div class="col-lg-8">
       <h1>Login</h1>
       <%= form_for @conn,
                   Routes.session_path(@conn, :create),
@@ -15,6 +15,11 @@
           <%= password_input f, :password, placeholder: "Password", class: "form-control" %>
         </div>
         <%= submit "Log in", class: "btn btn-primary mt-1" %>
+
+        <hr>
+        <a href="<%= @oauth_google_url %>">
+          <img src="https://i.imgur.com/Kagbzkq.png" alt="Sign in with Google" />
+        </a>
       <% end %>
     </div>
   </div>

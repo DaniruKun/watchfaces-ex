@@ -14,6 +14,8 @@ defmodule WatchFaces.Accounts.User do
     timestamps()
   end
 
+  @admin_emails ["thedanpetrov@gmail.com", "testadmin@gmail.com"]
+
   @doc false
   def changeset(user, attrs) do
     user
@@ -29,14 +31,43 @@ defmodule WatchFaces.Accounts.User do
     |> cast(attrs, [:password])
     |> validate_required(:password)
     |> validate_length(:password, min: 8, max: 40)
-    |> put_change(:role, "admin")
+    |> put_role()
     |> put_pass_hash()
+  end
+
+  def google_registration_changeset(user, %{email: email}) do
+    attrs = %{email: email, username: username_from_email(email)}
+
+    user
+    |> change(attrs)
+    |> put_role()
   end
 
   defp put_pass_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
         put_change(changeset, :password_hash, Pbkdf2.hash_pwd_salt(pass))
+
+      _ ->
+        changeset
+    end
+  end
+
+  defp username_from_email(email), do: email |> String.split("@") |> Enum.at(0, "unknown")
+
+  defp put_role(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{email: email}} ->
+        role =
+          cond do
+            email in @admin_emails ->
+              "admin"
+
+            true ->
+              "regular"
+          end
+
+        put_change(changeset, :role, role)
 
       _ ->
         changeset
