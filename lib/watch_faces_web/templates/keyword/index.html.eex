@@ -14,7 +14,6 @@
       <td><%= keyword.name %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.keyword_path(@conn, :show, keyword) %></span>
         <span><%= link "Edit", to: Routes.keyword_path(@conn, :edit, keyword) %></span>
         <span><%= link "Delete", to: Routes.keyword_path(@conn, :delete, keyword), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>

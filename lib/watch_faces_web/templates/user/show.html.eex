@@ -14,7 +14,7 @@
 
   <li>
     <strong>Password hash:</strong>
-    <%= @user.password_hash %>
+    <%= @user.password_hash |> String.slice(0..10) %>***
   </li>
 
 </ul>
