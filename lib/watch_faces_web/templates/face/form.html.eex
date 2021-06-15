@@ -1,26 +1,30 @@
-<%= form_for @changeset, @action, [multipart: true], fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
+<div class="row">
+  <div class="col-lg-6">
+    <%= form_for @changeset, @action, [multipart: true], fn f -> %>
+      <%= if @changeset.action do %>
+        <div class="alert alert-danger">
+          <p>Oops, something went wrong! Please check the errors below.</p>
+        </div>
+      <% end %>
 
-  <%= label f, :name, class: "form-label" %>
-  <%= text_input f, :name, class: "form-control" %>
-  <%= error_tag f, :name %>
+      <%= label f, :name, class: "form-label" %>
+      <%= text_input f, :name, class: "form-control" %>
+      <%= error_tag f, :name %>
 
-  <%= label f, :user_id, class: "form-label" %>
-  <%= number_input f, :user_id, class: "form-control" %>
-  <%= error_tag f, :user_id %>
+      <%= label f, :user_id, class: "form-label" %>
+      <%= number_input f, :user_id, class: "form-control" %>
+      <%= error_tag f, :user_id %>
 
-  <%= label f, :watchface_file, class: "form-label" %>
-  <%= file_input f, :watchface_file, class: "form-control" %>
+      <%= label f, :watchface_file, class: "form-label" %>
+      <%= file_input f, :watchface_file, class: "form-control" %>
 
-  <%= label f, :keywords, class: "form-label" %>
-  <%= multiple_select f, :keywords, @keywords, selected: [], class: "form-control" %>
-  <%= error_tag f, :keywords %>
+      <%= label f, :keywords, class: "form-label" %>
+      <%= multiple_select f, :keywords, @keywords, selected: [], class: "form-control" %>
+      <%= error_tag f, :keywords %>
 
-  <div class="my-2">
-    <%= submit "Save", class: "btn btn-primary" %>
+      <div class="my-2">
+        <%= submit "Save", class: "btn btn-primary" %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

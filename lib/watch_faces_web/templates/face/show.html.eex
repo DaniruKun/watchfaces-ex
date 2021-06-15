@@ -1,29 +1,25 @@
-<h1>Show Face</h1>
+<div class="row d-flex px-2">
 
-<ul>
+  <div class="col-lg-5 d-flex flex-column align-items-center">
+  <%= img_tag(@face.thumbnail, class: "p-3") %>
+  <%= link "Download", to: @face.pkg_file, class: "btn btn-primary px-4" %>
+  </div>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @face.name %>
-  </li>
-
-  <li>
-    <strong>Author:</strong>
-    <%= @face.user.username %>
-  </li>
-
-  <li>
-    <strong>Keywords:</strong>
+  <div class="col-md mx-2">
+    <h1><%= @face.name %></h1>
+    Keywords:
     <%= for keyword <- @face.keywords do %>
-      <%= keyword.name %>
+      <span class="badge rounded-pill bg-secondary">
+        <%= keyword.name %>
+      </span>
     <% end %>
+    <h2 class="my-2">Author</h2>
+    <p><strong><%= @face.user.username %></strong></p>
 
-  </li>
+  </div>
+</div>
 
-</ul>
-
-<%= img_tag(@face.thumbnail) %>
-<%= link "Download", to: @face.pkg_file %>
+<hr>
 
 <span><%= link "Edit", to: Routes.face_path(@conn, :edit, @face) %></span>
 <span><%= link "Back", to: Routes.face_path(@conn, :index) %></span>
