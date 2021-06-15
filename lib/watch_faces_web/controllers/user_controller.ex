@@ -20,15 +20,13 @@ defmodule WatchFacesWeb.UserController do
     case Accounts.create_user(user_params) do
       {:ok, user} ->
         conn
-        |> WatchFacesWeb.Auth.login(user)
         |> put_flash(:info, "User created successfully.")
-        |> redirect(to: Routes.user_path(conn, :show, user))
+        |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
-
 
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)

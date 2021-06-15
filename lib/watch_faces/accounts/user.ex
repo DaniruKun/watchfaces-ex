@@ -28,8 +28,8 @@ defmodule WatchFaces.Accounts.User do
   def registration_changeset(user, attrs) do
     user
     |> changeset(attrs)
-    |> cast(attrs, [:password])
-    |> validate_required(:password)
+    |> cast(attrs, [:username, :email, :password])
+    |> validate_required([:username, :email, :password])
     |> validate_length(:password, min: 8, max: 40)
     |> put_role()
     |> put_pass_hash()
