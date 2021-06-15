@@ -7,7 +7,8 @@ defmodule WatchFacesWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_watch_faces_key",
-    signing_salt: "C4gNi/yP"
+    signing_salt: "C4gNi/yP",
+    max_age: 1800
   ]
 
   socket "/socket", WatchFacesWeb.UserSocket,

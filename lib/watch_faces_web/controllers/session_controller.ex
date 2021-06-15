@@ -10,7 +10,7 @@ defmodule WatchFacesWeb.SessionController do
       {:ok, user} ->
         conn
         |> WatchFacesWeb.Auth.login(user)
-        |> put_flash(:info, "Welcome back")
+        |> put_flash(:info, "Welcome back, #{username}")
         |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, _reason} ->
