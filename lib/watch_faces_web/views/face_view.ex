@@ -11,7 +11,7 @@ defmodule WatchFacesWeb.FaceView do
           <h3><%= face.name %></h3>
           <%= keywords face %>
           <div class="d-flex justify-content-between align-items-center mt-1">
-            <%= link "Show", to: Routes.face_path(conn, :show, face), class: "btn btn-sm btn-outline-secondary" %>
+            <%= link "Show", to: Routes.face_path(conn, :show, face), class: "btn btn-sm btn-outline-secondary px-2" %>
           </div>
         </div>
       </div>

@@ -67,6 +67,7 @@ defmodule WatchFacesWeb.FaceController do
 
   def update(conn, %{"id" => id, "face" => face_params}) do
     face = Faces.get_face!(id)
+    keywords = fetch_keywords()
 
     case Faces.update_face(face, face_params) do
       {:ok, face} ->
@@ -75,7 +76,7 @@ defmodule WatchFacesWeb.FaceController do
         |> redirect(to: Routes.face_path(conn, :show, face))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", face: face, changeset: changeset)
+        render(conn, "edit.html", face: face, changeset: changeset, keywords: keywords)
     end
   end
 

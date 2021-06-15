@@ -2,24 +2,29 @@
 
   <div class="col-lg-5 d-flex flex-column align-items-center">
   <%= img_tag(@face.thumbnail, class: "p-3") %>
-  <%= link "Download", to: @face.pkg_file, class: "btn btn-primary px-4" %>
+
+  <a type="button" href="<%= @face.pkg_file %>">
+    <img src="/images/add-watch-face2.svg">
+  </a>
   </div>
 
   <div class="col-md mx-2">
-    <h1><%= @face.name %></h1>
+    <h2 class="display-2"><%= @face.name %></h2>
     Keywords:
     <%= for keyword <- @face.keywords do %>
       <span class="badge rounded-pill bg-secondary">
         <%= keyword.name %>
       </span>
     <% end %>
-    <h2 class="my-2">Author</h2>
-    <p><strong><%= @face.user.username %></strong></p>
+    <h3 class="my-2">Author</h3><strong>@<%= @face.user.username %></strong>
+
+    <hr>
+
+
+<span><a class="btn btn-outline-secondary mx-1" href="<%= Routes.face_path(@conn, :edit, @face) %>">
+Edit <img src="/images/pencil-square.svg" alt="edit" width="16" height="16">
+</a></span>
+<span><%= link "Back", to: Routes.face_path(@conn, :index), class: "btn btn-outline-primary mx-1" %></span>
 
   </div>
 </div>
-
-<hr>
-
-<span><%= link "Edit", to: Routes.face_path(@conn, :edit, @face) %></span>
-<span><%= link "Back", to: Routes.face_path(@conn, :index) %></span>
