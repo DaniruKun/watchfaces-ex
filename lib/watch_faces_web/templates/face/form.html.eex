@@ -5,22 +5,22 @@
     </div>
   <% end %>
 
-  <%= label f, :name %>
-  <%= text_input f, :name %>
+  <%= label f, :name, class: "form-label" %>
+  <%= text_input f, :name, class: "form-control" %>
   <%= error_tag f, :name %>
 
-  <%= label f, :user_id %>
-  <%= number_input f, :user_id %>
+  <%= label f, :user_id, class: "form-label" %>
+  <%= number_input f, :user_id, class: "form-control" %>
   <%= error_tag f, :user_id %>
 
-  <%= label f, :watchface_file %>
+  <%= label f, :watchface_file, class: "form-label" %>
   <%= file_input f, :watchface_file, class: "form-control" %>
 
-  <%= label f, :keywords %>
-  <%= multiple_select f, :keywords, @keywords, selected: [] %>
+  <%= label f, :keywords, class: "form-label" %>
+  <%= multiple_select f, :keywords, @keywords, selected: [], class: "form-control" %>
   <%= error_tag f, :keywords %>
 
-  <div>
-    <%= submit "Save" %>
+  <div class="my-2">
+    <%= submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>
