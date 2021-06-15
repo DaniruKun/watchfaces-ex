@@ -1,11 +1,11 @@
 <h1>Listing Keywords</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Name</th>
+      <th scope="col">Name</th>
 
-      <th></th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -23,4 +23,4 @@
   </tbody>
 </table>
 
-<span><%= link "New Keyword", to: Routes.keyword_path(@conn, :new) %></span>
+<span><%= link "New Keyword", to: Routes.keyword_path(@conn, :new), class: "btn btn-primary" %></span>

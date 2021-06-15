@@ -1,38 +1,14 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
-</section>
-
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-    </ul>
-  </article>
-</section>
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">Apple Watch Faces Portal</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">Browse, download, and upload Apple Watch faces.</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <a role="button" class="btn btn-primary btn-lg px-4 gap-3" href="<%= Routes.face_path(@conn, :index) %>">
+      Browse faces
+      </a>
+      <a role="button" class="btn btn-outline-secondary btn-lg px-4" href="<%= Routes.face_path(@conn, :new) %>">
+      Upload a face  <img src="/images/upload.svg" alt="upload" width="24" height="24" class="mx-1 mb-1 text-secondary">
+      </a>
+    </div>
+  </div>
+</div>

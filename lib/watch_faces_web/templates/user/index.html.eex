@@ -1,11 +1,11 @@
 <h1>Listing Users</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Username</th>
-      <th>Role</th>
-      <th>Password hash</th>
+      <th scope="col">Username</th>
+      <th scope="col">Role</th>
+      <th scope="col">Password hash</th>
 
       <th></th>
     </tr>
@@ -15,7 +15,7 @@
     <tr>
       <td><%= user.username %></td>
       <td><%= user.role %></td>
-      <td><%= user.password_hash %></td>
+      <td><%= user.password_hash |> String.slice(0..10) %>***</td>
 
       <td>
         <span><%= link "Show", to: Routes.user_path(@conn, :show, user) %></span>
@@ -27,4 +27,4 @@
   </tbody>
 </table>
 
-<span><%= link "New User", to: Routes.user_path(@conn, :new) %></span>
+<span><%= link "New User", to: Routes.user_path(@conn, :new), class: "btn btn-primary" %></span>
