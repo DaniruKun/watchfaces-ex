@@ -19,4 +19,11 @@ defmodule WatchFacesWeb.SessionController do
         |> render("new.html")
     end
   end
+
+  def delete(conn, _) do
+    conn
+    |> WatchFacesWeb.Auth.logout()
+    |> put_flash(:info, "Logged out succesfully.")
+    |> redirect(to: Routes.face_path(conn, :index))
+  end
 end

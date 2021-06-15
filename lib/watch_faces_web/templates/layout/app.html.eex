@@ -26,8 +26,29 @@
                 <li class="nav-item">
                   <%= link "Faces", to: Routes.face_path(@conn, :index), class: "nav-link active" %>
                 </li>
+                <%= if @current_user.role == "admin" do %>
+                  <li class="nav-item">
+                    <%= link "Users", to: Routes.user_path(@conn, :index), class: "nav-link active" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link "Keywords", to: Routes.keyword_path(@conn, :index), class: "nav-link active" %>
+                  </li>
+                <% end %>
               </ul>
-
+              <div class="text-end">
+                <%= if @current_user do %>
+                  <strong>
+                  <%= @current_user.username %>
+                  </strong>
+                  <span class="badge bg-info text-dark"><%= @current_user.role %></span>
+                  <%= link "Log out",
+                            to: Routes.session_path(@conn, :delete, @current_user),
+                            method: "delete" , class: "btn btn-dark mx-2" %>
+                 <% else %>
+                  <%= link "Register", to: Routes.user_path(@conn, :new), class: "btn btn-primary" %>
+                  <%= link "Log in", to: Routes.session_path(@conn, :new), class: "btn btn-secondary" %>
+                 <% end %>
+              </div>
             </div>
           </div>
         </nav>
