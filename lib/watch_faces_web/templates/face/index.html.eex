@@ -1,30 +1,31 @@
-<h1>Listing Faces</h1>
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Watch Faces</h1>
+        <p class="lead text-muted">Browse different available faces.</p>
+        <p>
+          <form class="d-flex" action="<%= Routes.face_path(@conn, :index) %>" method="get">
+            <input class="form-control me-2" type="search" placeholder="Name" aria-label="Search" name="q">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+          </form>
+        </p>
+      </div>
+    </div>
+</section>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Author</th>
-      <th>Keywords</th>
+<div class="album py-5">
+    <div class="container">
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for face <- @faces do %>
-    <tr>
-      <td><%= face.name %></td>
-      <td><%= face.user_id %></td>
-      <%# <td><%= face.keywords %></td> %>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-      <td>
-        <span><%= link "Show", to: Routes.face_path(@conn, :show, face) %></span>
-        <span><%= link "Edit", to: Routes.face_path(@conn, :edit, face) %></span>
-        <span><%= link "Delete", to: Routes.face_path(@conn, :delete, face), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+        <%= for face <- @faces do %>
+          <%= face_card @conn, face %>
+        <% end %>
 
-<span><%= link "New Face", to: Routes.face_path(@conn, :new) %></span>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<span><%= link "New Face", to: Routes.face_path(@conn, :new), class: "btn btn-secondary" %></span>

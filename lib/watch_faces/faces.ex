@@ -19,6 +19,7 @@ defmodule WatchFaces.Faces do
   """
   def list_faces do
     Repo.all(Face)
+    |> Repo.preload([:keywords])
   end
 
   @doc """
