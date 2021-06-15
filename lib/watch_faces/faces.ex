@@ -22,6 +22,17 @@ defmodule WatchFaces.Faces do
     |> Repo.preload([:keywords])
   end
 
+  def search_face(query) do
+    clean_query = query |> String.normalize(:nfkc) |> String.downcase()
+    pred = fn face ->
+      String.contains?(String.downcase(face.name), clean_query)
+    end
+
+    Repo.all(Face)
+    |> Repo.preload([:keywords])
+    |> Enum.filter(pred)
+  end
+
   @doc """
   Gets a single face.
 

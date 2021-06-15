@@ -6,22 +6,21 @@ defmodule WatchFacesWeb.FaceController do
 
   require Logger
 
-  #   Face params:
-  # : %{
-  #   "keywords" => ["option1"],
-  #   "name" => "Lain",
-  #   "user_id" => "1",
-  #   "watchface_file" => %Plug.Upload{
-  #     content_type: "application/octet-stream",
-  #     filename: "Photos.watchface",
-  #     path: "/var/folders/fl/lfgytbr51_z3rmt1t6swrzv40000gn/T//plug-1623/multipart-1623588662-773925258329140-2"
-  #   }
-  # }
-
   @media_folder_path "/var/www/faces/media/"
 
-  def index(conn, _params) do
-    faces = Faces.list_faces()
+  def index(conn, params) do
+    faces =
+      case params do
+        %{"q" => ""} ->
+          Faces.list_faces()
+
+        %{"q" => query} ->
+          Faces.search_face(query)
+
+        _ ->
+          Faces.list_faces()
+      end
+
     render(conn, "index.html", faces: faces)
   end
 
