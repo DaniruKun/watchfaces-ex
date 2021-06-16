@@ -2,6 +2,8 @@
 
 WatchFaces is a web portal that allows Apple Watch users to share their custom  Watch faces, together with complications, colors, etc.
 
+![gallery](sample/gallery-view.png)
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables:
