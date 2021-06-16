@@ -36,13 +36,18 @@ defmodule WatchFacesWeb.FaceController do
   def create(conn, %{"face" => face_params}) do
     if face_params["watchface_file"] do
       with {:ok, thumbnail_file_name} <- save_thumbnail(face_params),
-           {:ok, pkg_file_name} <- save_watchface(face_params) do
+           {:ok, pkg_file_name} <- save_watchface(face_params),
+           user_id <- conn.assigns.current_user.id do
         file_params = %{
           "pkg_file" => "/uploads/#{pkg_file_name}",
           "thumbnail" => "/uploads/#{thumbnail_file_name}"
         }
 
-        case Faces.create_face(Map.merge(face_params, file_params)) do
+        case Faces.create_face(
+               face_params
+               |> Map.merge(file_params)
+               |> Map.merge(%{"user_id" => Integer.to_string(user_id)})
+             ) do
           {:ok, face} ->
             conn
             |> put_flash(:info, "Face created successfully.")

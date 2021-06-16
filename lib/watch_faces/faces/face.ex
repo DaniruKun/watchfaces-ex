@@ -24,7 +24,7 @@ defmodule WatchFaces.Faces.Face do
   def changeset(face, attrs) do
     face
     |> WatchFaces.Repo.preload([:user, :keywords])
-    |> cast(attrs, [:name, :pkg_file, :thumbnail, :user_id])
+    |> cast(attrs, [:name, :pkg_file, :thumbnail])
     |> keyword_changeset(attrs)
     |> validate_required([:name, :pkg_file])
   end
@@ -34,7 +34,7 @@ defmodule WatchFaces.Faces.Face do
 
     user
     |> Ecto.build_assoc(:faces, attrs)
-    |> cast(attrs, [:name, :pkg_file, :thumbnail, :user_id])
+    |> cast(attrs, [:name, :pkg_file, :thumbnail])
     |> validate_required(:name)
     |> keyword_changeset(attrs)
     |> put_assoc(:user, user)

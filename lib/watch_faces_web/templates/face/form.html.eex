@@ -11,10 +11,6 @@
       <%= text_input f, :name, class: "form-control" %>
       <%= error_tag f, :name %>
 
-      <%= label f, :user_id, class: "form-label" %>
-      <%= number_input f, :user_id, class: "form-control" %>
-      <%= error_tag f, :user_id %>
-
       <%= label f, :watchface_file, class: "form-label" %>
       <%= file_input f, :watchface_file, class: "form-control" %>
 
