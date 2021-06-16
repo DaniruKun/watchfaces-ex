@@ -16,15 +16,19 @@
         <%= keyword.name %>
       </span>
     <% end %>
-    <h3 class="my-2">Author</h3><strong>@<%= @face.user.username %></strong>
+    <h3 class="my-2">Author</h3>
+    <strong>
+    <%= link "@#{@face.user.username}", to: Routes.user_path(@conn, :show, @face.user) %>
+    </strong>
 
     <hr>
 
-
-<span><a class="btn btn-outline-secondary mx-1" href="<%= Routes.face_path(@conn, :edit, @face) %>">
-Edit <img src="/images/pencil-square.svg" alt="edit" width="16" height="16">
-</a></span>
-<span><%= link "Back", to: Routes.face_path(@conn, :index), class: "btn btn-outline-primary mx-1" %></span>
+  <%= if @current_user.role == "admin" || @current_user.user.id == @face.user.id do %>
+    <span><a class="btn btn-outline-secondary mx-1" href="<%= Routes.face_path(@conn, :edit, @face) %>">
+    Edit <img src="/images/pencil-square.svg" alt="edit" width="16" height="16">
+    </a></span>
+  <% end %>
+  <span><%= link "Back", to: Routes.face_path(@conn, :index), class: "btn btn-outline-primary mx-1" %></span>
 
   </div>
 </div>
