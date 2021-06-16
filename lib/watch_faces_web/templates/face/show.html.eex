@@ -6,6 +6,12 @@
   <a type="button" href="<%= @face.pkg_file %>">
     <img src="/images/add-watch-face2.svg">
   </a>
+
+  <a href="https://support.apple.com/en-us/HT211657#use-shared-watch-face" class="text-decoration-none mt-4">
+    How use online watch face <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-right mb-1" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+    </svg>
+  </a>
   </div>
 
   <div class="col-md mx-2">
@@ -23,7 +29,7 @@
 
     <hr>
 
-  <%= if @current_user.role == "admin" || @current_user.user.id == @face.user.id do %>
+  <%= if @current_user && (@current_user.role == "admin" || @current_user.user.id == @face.user.id) do %>
     <span><a class="btn btn-outline-secondary mx-1" href="<%= Routes.face_path(@conn, :edit, @face) %>">
     Edit <img src="/images/pencil-square.svg" alt="edit" width="16" height="16">
     </a></span>
