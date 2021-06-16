@@ -1,5 +1,21 @@
 # WatchFaces
 
+WatchFaces is a web portal that allows Apple Watch users to share their custom  Watch faces, together with complications, colors, etc.
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables:
+
+`GOOGLE_CLIENT_ID` - GCP Project Oauth application client ID
+
+`GOOGLE_CLIENT_SECRET` - GCP Project Oauth application client secret
+
+## Authors
+
+- [@danirukun](https://www.github.com/danirukun) aka Daniils Petrovs
+
+## Running
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
@@ -12,10 +28,6 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Learn more
+## License
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+[MIT](https://choosealicense.com/licenses/mit/)
