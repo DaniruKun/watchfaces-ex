@@ -5,7 +5,7 @@
     <tr>
       <th scope="col">Username</th>
       <th scope="col">Role</th>
-      <th scope="col">Password hash</th>
+      <th scope="col">Email</th>
 
       <th></th>
     </tr>
@@ -15,7 +15,7 @@
     <tr>
       <td><%= user.username %></td>
       <td><%= user.role %></td>
-      <td><%= user.password_hash |> String.slice(0..10) %>***</td>
+      <td><%= user.email %></td>
 
       <td>
         <span><%= link "Show", to: Routes.user_path(@conn, :show, user) %></span>

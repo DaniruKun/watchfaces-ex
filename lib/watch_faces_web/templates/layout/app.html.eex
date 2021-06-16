@@ -38,9 +38,8 @@
               <div class="text-end">
                 <%= if @current_user do %>
                   <strong>
-                  <%= @current_user.username %>
+                  <%= link @current_user.username, to: Routes.user_path(@conn, :show, @current_user) %>
                   </strong>
-                  <span class="badge rounded-pill bg-secondary mx-2"><%= @current_user.role %></span>
                   <%= logout_button @conn, @current_user %>
                  <% else %>
                   <%= link "Register", to: Routes.user_path(@conn, :new), class: "btn btn-primary" %>
