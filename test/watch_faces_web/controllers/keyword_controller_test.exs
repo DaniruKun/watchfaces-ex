@@ -75,6 +75,7 @@ defmodule WatchFacesWeb.KeywordControllerTest do
     test "deletes chosen keyword", %{conn: conn, keyword: keyword} do
       conn = delete(conn, Routes.keyword_path(conn, :delete, keyword))
       assert redirected_to(conn) == Routes.keyword_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.keyword_path(conn, :show, keyword))
       end

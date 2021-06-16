@@ -75,6 +75,7 @@ defmodule WatchFacesWeb.FaceControllerTest do
     test "deletes chosen face", %{conn: conn, face: face} do
       conn = delete(conn, Routes.face_path(conn, :delete, face))
       assert redirected_to(conn) == Routes.face_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.face_path(conn, :show, face))
       end
