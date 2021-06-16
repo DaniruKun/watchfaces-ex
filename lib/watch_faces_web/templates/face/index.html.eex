@@ -1,6 +1,6 @@
 <section class="py-5 text-center container">
     <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
+      <div class="col-lg-6 col-md-8 mx-auto d-grid gap-2 text-center">
         <h1 class="fw-light">Watch Faces</h1>
         <p class="lead text-muted">Browse different available faces.</p>
         <p>
@@ -9,13 +9,18 @@
             <button class="btn btn-outline-primary" type="submit">Search</button>
           </form>
         </p>
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+          <a class="btn btn-light w-50 shadow-sm rounded-pill"
+         href="<%= Routes.face_path(@conn, :new) %>"
+         role="button">Upload <img src="/images/cloud-arrow-up-fill.svg" alt="upload" width="22" height="22">
+         </a>
+        </div>
       </div>
     </div>
 </section>
 
 <div class="album py-5">
     <div class="container">
-
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
         <%= for face <- @faces do %>
@@ -25,7 +30,3 @@
       </div>
     </div>
   </div>
-
-<hr>
-
-<span><%= link "New Face", to: Routes.face_path(@conn, :new), class: "btn btn-secondary" %></span>
