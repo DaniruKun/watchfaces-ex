@@ -23,6 +23,7 @@ defmodule WatchFaces.Accounts.User do
     |> validate_required([:username, :email])
     |> validate_length(:username, min: 1, max: 30)
     |> validate_length(:email, min: 10, max: 50)
+    |> validate_format(:email, ~r/@/)
   end
 
   def registration_changeset(user, attrs) do
