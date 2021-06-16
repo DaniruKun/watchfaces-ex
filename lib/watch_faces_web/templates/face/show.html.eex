@@ -29,7 +29,7 @@
 
     <hr>
 
-  <%= if @current_user && (@current_user.role == "admin" || @current_user.user.id == @face.user.id) do %>
+  <%= if @current_user && (@current_user.role == "admin" || @current_user.id == @face.user.id) do %>
     <span><a class="btn btn-outline-secondary mx-1" href="<%= Routes.face_path(@conn, :edit, @face) %>">
     Edit <img src="/images/pencil-square.svg" alt="edit" width="16" height="16">
     </a></span>

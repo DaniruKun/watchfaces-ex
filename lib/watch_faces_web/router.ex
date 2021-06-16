@@ -27,7 +27,7 @@ defmodule WatchFacesWeb.Router do
   end
 
   scope "/manage", WatchFacesWeb do
-    pipe_through [:browser, :authenticate_user]
+    pipe_through [:browser, :authenticate_user, :authenticate_admin]
 
     resources "/users", UserController, only: [:index, :edit, :update, :delete]
     resources "/keywords", KeywordController

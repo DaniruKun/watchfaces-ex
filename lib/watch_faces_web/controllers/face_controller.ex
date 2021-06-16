@@ -7,6 +7,7 @@ defmodule WatchFacesWeb.FaceController do
   require Logger
 
   plug :authenticate_user when action in [:new, :create, :edit, :update, :delete]
+  plug :authenticate_admin when action in [:edit, :delete, :update]
 
   @media_folder_path "/var/www/faces/media/"
 
