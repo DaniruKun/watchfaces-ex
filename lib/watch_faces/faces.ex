@@ -24,6 +24,7 @@ defmodule WatchFaces.Faces do
 
   def search_face(query) do
     clean_query = query |> String.normalize(:nfkc) |> String.downcase()
+
     pred = fn face ->
       String.contains?(String.downcase(face.name), clean_query)
     end

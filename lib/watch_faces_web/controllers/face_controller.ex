@@ -48,9 +48,13 @@ defmodule WatchFacesWeb.FaceController do
             |> redirect(to: Routes.face_path(conn, :show, face))
 
           {:error, %Ecto.Changeset{} = changeset} ->
-            render(conn, "new.html", changeset: changeset)
+            render(conn, "new.html", changeset: changeset, keywords: fetch_keywords())
         end
       end
+    else
+      conn
+      |> put_flash(:error, "Please upload a watchface file")
+      |> redirect(to: Routes.face_path(conn, :new))
     end
   end
 
@@ -102,6 +106,7 @@ defmodule WatchFacesWeb.FaceController do
     Logger.debug("Upload file name: #{upload_file_name}")
 
     :ok = File.cp(upload.path, @media_folder_path <> upload_file_name)
+    Logger.info("Saved new watch face with file name: " <> upload_file_name)
     {:ok, upload_file_name}
   end
 

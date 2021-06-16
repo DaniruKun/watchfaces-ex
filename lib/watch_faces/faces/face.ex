@@ -25,20 +25,28 @@ defmodule WatchFaces.Faces.Face do
     face
     |> WatchFaces.Repo.preload([:user, :keywords])
     |> cast(attrs, [:name, :pkg_file, :thumbnail, :user_id])
-    |> cast_assoc(:keywords)
+    |> keyword_changeset(attrs)
     |> validate_required([:name, :pkg_file])
   end
 
   def insert_changeset(%{"user_id" => user_id} = attrs) do
     user = WatchFaces.Accounts.get_user!(user_id)
-    keywords = WatchFaces.Keywords.list_keywords() |> Enum.filter(&(&1.name in attrs["keywords"]))
 
     user
     |> Ecto.build_assoc(:faces, attrs)
     |> cast(attrs, [:name, :pkg_file, :thumbnail, :user_id])
-    |> put_assoc(:keywords, keywords)
+    |> validate_required(:name)
+    |> keyword_changeset(attrs)
     |> put_assoc(:user, user)
     |> validate_length(:name, min: 3)
     |> unique_constraint(:name)
+  end
+
+  defp keyword_changeset(changeset, attrs) do
+    keywords =
+      WatchFaces.Keywords.list_keywords()
+      |> Enum.filter(&(attrs["keywords"] && &1.name in attrs["keywords"]))
+
+    put_assoc(changeset, :keywords, keywords)
   end
 end
