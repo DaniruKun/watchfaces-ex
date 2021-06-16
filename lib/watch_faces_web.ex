@@ -23,6 +23,7 @@ defmodule WatchFacesWeb do
 
       import Plug.Conn
       import WatchFacesWeb.Gettext
+      import WatchFacesWeb.Auth, only: [authenticate_user: 2]
       alias WatchFacesWeb.Router.Helpers, as: Routes
     end
   end
@@ -48,6 +49,7 @@ defmodule WatchFacesWeb do
 
       import Plug.Conn
       import Phoenix.Controller
+      import WatchFacesWeb.Auth, only: [authenticate_user: 2]
     end
   end
 

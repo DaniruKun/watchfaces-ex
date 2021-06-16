@@ -6,6 +6,8 @@ defmodule WatchFacesWeb.FaceController do
 
   require Logger
 
+  plug :authenticate_user when action in [:new, :create, :edit, :update, :delete]
+
   @media_folder_path "/var/www/faces/media/"
 
   def index(conn, params) do

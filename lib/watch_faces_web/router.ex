@@ -18,28 +18,22 @@ defmodule WatchFacesWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/users", UserController
+    resources "/users", UserController, only: [:new, :create, :show]
     resources "/faces", FaceController
-    resources "/keywords", KeywordController
-    resources "/comments", CommentController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
 
     # Google Oauth
     get "/auth/google/callback", GoogleAuthController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", WatchFacesWeb do
-  #   pipe_through :api
-  # end
+  scope "/manage", WatchFacesWeb do
+    pipe_through [:browser, :authenticate_user]
 
-  # Enables LiveDashboard only for development
-  #
-  # If you want to use the LiveDashboard in production, you should put
-  # it behind authentication and allow only admins to access it.
-  # If your application does not have an admins-only section yet,
-  # you can use Plug.BasicAuth to set up some basic authentication
-  # as long as you are also using SSL (which you should anyway).
+    resources "/users", UserController, only: [:index, :edit, :update, :delete]
+    resources "/keywords", KeywordController
+    resources "/comments", CommentController
+  end
+
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
 

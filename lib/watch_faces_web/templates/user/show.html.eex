@@ -12,11 +12,6 @@
     <%= @user.role %>
   </li>
 
-  <li>
-    <strong>Password hash:</strong>
-    <%= @user.password_hash |> String.slice(0..10) %>***
-  </li>
-
 </ul>
 
 <span><%= link "Edit", to: Routes.user_path(@conn, :edit, @user) %></span>
